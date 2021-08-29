@@ -1,0 +1,8 @@
+*.code-workspace
+venv
+logs
+__pycache__
+.vscode
+*.db
+config.ini
+*.service
