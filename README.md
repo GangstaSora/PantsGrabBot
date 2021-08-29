@@ -3,7 +3,7 @@ A Twitch bot that creates a point system for creating pyramids and partakes in a
 Contact GangstaSora#2657 on discord to add the bot to your channel. 
 
 ## Contributing
-Contributions are welcome. There are no guidelines 
+Contributions are welcome. There are no strict guidelines, pull requests that meet the bar of exisiting code will be accepted. PantGrabBot should be fun, make any teasing lighthearted, and should not do anything to get banned. Feel free to reach out on discord (GangstaSora#2657) to discuss features and whether or not they would be acceptable. 
 
 ## Installation/Setup for development
 Designed to be run in a Linux environment. There's nothing obvious should prevent running in Windows or MacOS, but this is untested and mileage may vary.
