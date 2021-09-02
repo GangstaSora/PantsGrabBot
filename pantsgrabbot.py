@@ -63,7 +63,7 @@ class PantsGrabBot(commands.Bot):
         if self.is_live or self.DEBUG:
 
             # process this message in the main pyramid processor
-            main_pyramiding, main_size, main_completed = self.pyramid_tracker.process_message(message.content)
+            main_pyramiding, main_size, main_completed = self.pyramid_tracker.process_message(message)
 
             # process this message for pepegeClap pyramids
             pepege = self.pepege_trackers.setdefault(message.author.name, pyramid_tracker.PyramidTracker())

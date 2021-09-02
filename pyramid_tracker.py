@@ -1,12 +1,14 @@
 import asyncio
 import logging
+from twitchio import Message
 
 
 class PyramidTracker():
     pyramid_size = 1
     pyramid_follow = 2
     decending = False
-    previous_message = 'Placeholder'
+    pyramiding = False
+    previous_message = Message(content="placeholder")
 
     def __init__(self) -> None:
         self.logger = logging.getLogger('pantsgrabbot')
@@ -53,9 +55,6 @@ class PyramidTracker():
 
 
     def reset(self, message):
-        if max(self.pyramid_size, self.pyramid_follow) >= 3:
-            self.pyramid_record[0] = self.previous_message
-            asyncio.create_task(self.db.process_pyramid(self.pyramid_record, max(self.pyramid_size, self.pyramid_follow), self))
         self.previous_message = message
         self.pyramid_size = 1
         self.pyramid_follow = 2
@@ -63,5 +62,5 @@ class PyramidTracker():
         self.pyramiding = False
     
     def to_string(self):
-        return f'pyramid_size: {self.pyramid_size}, pyramid_follow: {self.pyramid_follow}, decending: {self.decending}, previous_message: {self.previous_message}'
+        return f'pyramid_size: {self.pyramid_size}, pyramid_follow: {self.pyramid_follow}, decending: {self.decending}, previous_message: {self.previous_message.content}'
         
