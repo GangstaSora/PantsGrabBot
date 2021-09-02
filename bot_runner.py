@@ -48,6 +48,7 @@ def start_bot(username):
 if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read('config.ini')
-    followbot = FollowingBot(config['TwitchCredentials']['oath'], config['TwitchCredentials']['client_id'], 
-                        config['TwitchCredentials']['client_secret'],config['Debug']['debug_user'])
+    followbot = FollowingBot(config['Debug']['debug_user'], config['TwitchCredentials']['oath'],
+                             config['TwitchCredentials']['client_id'], config['TwitchCredentials']['client_secret'],
+                             config['Debug']['debug_user'])
     followbot.run()
