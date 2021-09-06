@@ -80,6 +80,9 @@ class PantsGrabBot(commands.Bot):
             # send pepegeClap message if pepege pyramid was completed
             if pepege_completed and not main_completed:
                 await self.send_wrapper(message.channel.send, f'pepegeClap {message.author.name} kept going')
+        else:
+            # prevents pyramid record being filled up while streamer is offline
+            self.pyramid_record = [message]
                 
         # process any commands
         await self.handle_commands(message)

@@ -31,7 +31,7 @@ class PyramidTracker():
         check_count = message.content.count(self.previous_message.content)
 
         # check if pyramid started decending
-        if self.pyramiding and check_count == self.pyramid_follow - 2 and not self.decending:
+        if self.pyramid_follow >= 4 and check_count == self.pyramid_follow - 2 and not self.decending:
             self.decending = True
             self.pyramid_follow -= 2
             self.pyramid_size = self.pyramid_follow + 1
