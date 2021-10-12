@@ -154,9 +154,13 @@ class PantsGrabBot(commands.Bot):
             await self.send_wrapper(ctx.send, f'Now timing out griefers for {time} seconds Okayge ')
 
 
+    @commands.command(name="tourney")
+    async def golf_tourney(self, ctx):
+        await self.send_wrapper(ctx.send, f'The Kurum\'s Hole Golf Invitational is starting soon! Type "@iCandyyyy  dinkDonk " to sign up! ')
+
+
     @commands.command(name='golf')
     async def golf_command(self, ctx):
-        #await self.send_wrapper(ctx.send, f'The Kurum\'s Hole Golf Invitational is starting soon! Type "@iCandyyyy  dinkDonk " to sign up! ')
         await self.golf.play(ctx)
 
     @commands.command(name='1')
