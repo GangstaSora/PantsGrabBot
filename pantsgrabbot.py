@@ -48,8 +48,9 @@ class PantsGrabBot(commands.Bot):
 
     async def event_message(self, message):
         # pre-processing 
-        message.content = message.content.strip()
+        message.content = message.content.replace('\U000e0000', '') #??? why twitch
         message.content = " ".join(message.content.split())
+        message.content = message.content.strip()
         self.pyramid_record.append(message)
 
         # PantsGrab functionality
@@ -185,6 +186,11 @@ class PantsGrabBot(commands.Bot):
     @commands.command(name="wintrade")
     async def wintrade(self, ctx):
         await self.send_wrapper(ctx.send, "注意公民。 这是国家安全部。您的互联网活动引起了我们的注意。由于您的网络犯罪，您的社会 用评分将降至 -70。 (-70) 不要再这样做了。中国共产党的光荣。ATTENTION PLAYER. THIS IS THE TFT DEV TEAM. YOUR MATCH HISTORY HAS ATTRACTED OUR ATTENTION. DUE TO YOUR GAMEPLAY CRIMES YOU WILL BE BROUGHT DOWN TO -70 LADDER POINTS. (-70) DO NOT DO THIS AGAIN. GLORY TO THE GAME DESIGNER MORTDOG")
+
+    @commands.command(name='subtember')
+    async def subs(self, ctx):
+        if ctx.channel.name == 'kurumx' or ctx.channel.name == 'gangstasora':
+            await self.send_wrapper(ctx.send, '''Hello everyone subs are 20% off so please sub to this bum he needs to feed iCandyyyy's maplestory gacha addiction OkaygeBusiness ''')
 
     
 ######## Helpers ######################################################################################
