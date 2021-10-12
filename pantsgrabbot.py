@@ -4,6 +4,7 @@ import pyramid_db
 import logging_setup
 import pyramid_tracker
 import configparser
+import golf
 
         
 class PantsGrabBot(commands.Bot):
@@ -27,7 +28,9 @@ class PantsGrabBot(commands.Bot):
 
         self.pyramid_tracker = pyramid_tracker.PyramidTracker()
         self.db = pyramid_db.PyramidDb()
-        self.logger = logging_setup.setup(channel)	
+        self.logger = logging_setup.setup(channel)
+
+        self.golf = golf.GolfGame()	
 
 
     # Events don't need decorators when subclassed
@@ -153,7 +156,27 @@ class PantsGrabBot(commands.Bot):
 
     @commands.command(name='golf')
     async def golf_command(self, ctx):
-        await self.send_wrapper(ctx.send, f'The Kurum\'s Hole Golf Invitational is starting soon! Type "@iCandyyyy  dinkDonk " to sign up! ')
+        #await self.send_wrapper(ctx.send, f'The Kurum\'s Hole Golf Invitational is starting soon! Type "@iCandyyyy  dinkDonk " to sign up! ')
+        await self.golf.play(ctx)
+
+    @commands.command(name='1')
+    async def golf_vote_1(self, ctx):
+        self.golf.vote(0)
+
+
+    @commands.command(name='2')
+    async def golf_vote_2(self, ctx):
+        self.golf.vote(1)
+
+
+    @commands.command(name='3')
+    async def golf_vote_3(self, ctx):
+        self.golf.vote(2)
+
+
+    @commands.command(name='4')
+    async def golf_vote_4(self, ctx):
+        self.golf.vote(3)
 
 
     @commands.command(name='creator')
