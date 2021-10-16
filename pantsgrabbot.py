@@ -148,7 +148,7 @@ class PantsGrabBot(commands.Bot):
 
     
     @commands.command(name='timeouttime')
-    async def timeouttime(self, ctx, time=60):
+    async def timeouttime(self, ctx, time=5):
         if ctx.author.is_mod:
             self.timeout_time = time
             await self.send_wrapper(ctx.send, f'Now timing out griefers for {time} seconds Okayge ')
