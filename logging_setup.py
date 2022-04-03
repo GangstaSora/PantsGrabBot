@@ -10,9 +10,9 @@ def setup(channel):
 	application_logger.setLevel(logging.DEBUG)
 	db_logger.setLevel(logging.DEBUG)
 
-	fh_debug = TimedRotatingFileHandler(f'logs/{channel}/debug.log', when='h', interval=1, backupCount=48)
+	fh_debug = TimedRotatingFileHandler(f'logs/{channel}/debug.log', when='h', interval=1, backupCount=480)
 	fh_debug.setLevel(logging.DEBUG)
-	fh_info = TimedRotatingFileHandler(f'logs/{channel}/info.log', when='h', interval=1, backupCount=48)
+	fh_info = TimedRotatingFileHandler(f'logs/{channel}/info.log', when='h', interval=1, backupCount=480)
 	fh_info.setLevel(logging.INFO)
 
 

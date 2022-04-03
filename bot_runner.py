@@ -2,6 +2,7 @@ import logging
 from multiprocessing import Process
 import asyncio
 import os
+from time import sleep
 from pantsgrabbot import PantsGrabBot
 from twitchio.ext import commands
 import configparser
@@ -11,6 +12,7 @@ nest_asyncio.apply()
 
 class FollowingBot(commands.Bot):
     follow_set = set()
+    is_started = False
     processes = []
 
 
@@ -20,9 +22,12 @@ class FollowingBot(commands.Bot):
 
                          
     async def event_ready(self):
+        print("Triggered bot runner ready")
         pantsgrabbot = await self.get_users('pantsgrabbot')
         self.id = pantsgrabbot[0].id
-        await self.get_following_daemon()
+        if not self.is_started:
+            self.is_started = True
+            await self.get_following_daemon()
 
 
     async def get_following_daemon(self):
@@ -35,7 +40,8 @@ class FollowingBot(commands.Bot):
                     new_bot = Process(target=start_bot, args=(channel,), daemon=True)
                     new_bot.start()
                     self.processes.append(new_bot)
-                    logging.getLogger('pantsgrabbot').info(f'Started new bot for {channel}')
+                    print(f'Started new bot for {channel}')
+                    sleep(1)
                 self.follow_set = follow_set
             await asyncio.sleep(30)
 

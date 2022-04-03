@@ -1,10 +1,11 @@
 import asyncio
 from twitchio.ext import commands
-import pyramid_db
+import season1_db
 import logging_setup
 import pyramid_tracker
 import configparser
 import golf
+import random
 
         
 class PantsGrabBot(commands.Bot):
@@ -15,6 +16,30 @@ class PantsGrabBot(commands.Bot):
     grabbed_users = set()
     is_mitosis = True
     command_ready = True
+
+    cock_messages = ['You have a 0 inch cock, pepegeHmm i dont make the rules thats how you were born',
+                     'You have a 1 inch cock, dont worry its going to grow more',
+                     'You have a 2 inch cock, inch by inch the growth is there',
+                     'You have a 3 inch cock, hey thats better than having none',
+                     'You have a 4 inch cock, Wokege something is showing now',
+                     'You have a 5 inch cock, hey nice teaspoon you have there... oh its your dick',
+                     'You have a 6 inch cock, almost normal size not bad',
+                     'You have a 7 inch cock, nice you have a pencil size cock ',
+                     'You have a 8 inch cock, peepoClap normal size',
+                     'You have a 9 inch cock, 1 inch more 1 inch less just get 9 and run away',
+                     'You have a 10 inch cock, oh i see is something new around here peepoShy',
+                     'You have a 11 inch cock, journey is just beginning keep growing',
+                     'You have a 12 inch cock, " haHAA Im 12 inches btw "',
+                     'You have a 13 inch cock, 13 reasons why your size is not important but holy that cock is huge',
+                     'You have a 14 inch cock, it seems we have a sussy cock around here i hope nobody vents ',
+                     'You have a 15 inch cock, Wokege we are going to inches never seen before',
+                     'You have a 16 inch cock, Ooh its this cock bbbbbbbroken ?',
+                     'You have a 17 inch cock, HandsUp',
+                     'You have a 18 inch cock, 18 inches of a cowboy cock in the shower',
+                     'You have a 19 inch cock, ♫you spin my head right round♫',
+                     'Congratulations You have a 20 inch cock, you pull out excalibur your legend is just beginning now'
+                     ]
+    
 
 
     def __init__(self, channel, oath, client_id, client_secret, debug_user):
@@ -27,10 +52,12 @@ class PantsGrabBot(commands.Bot):
             self.DEBUG = False
 
         self.pyramid_tracker = pyramid_tracker.PyramidTracker()
-        self.db = pyramid_db.PyramidDb()
+        self.db = season1_db.PyramidDb()
         self.logger = logging_setup.setup(channel)
 
         self.golf = golf.GolfGame()	
+
+        self.frog = 0
 
 
     # Events don't need decorators when subclassed
@@ -45,6 +72,7 @@ class PantsGrabBot(commands.Bot):
                 self.is_live = True
             else:
                 self.is_live = False
+                self.frog = 0
             self.logger.info(f'{channel} is_live: {self.is_live}')
             await asyncio.sleep(30)
 
@@ -100,6 +128,14 @@ class PantsGrabBot(commands.Bot):
         else:
             chatter = await self.db.get_chatter_points(name.lower(), ctx.channel.name)
         await self.send_wrapper(ctx.send, f'@{chatter[1].name} has {chatter[0].points} points!')
+
+    
+    @commands.command(name='cocksize')
+    async def cocksize_command(self, ctx, name=None):
+        if ctx.channel.name in {'kurumx'}:
+            await self.send_wrapper(ctx.send, "I regret to inform you that this streamer hates fun PogO ")
+        else:
+            await self.send_wrapper(ctx.send, f'@{ctx.author.name}, {random.choice(self.cock_messages)}')
 
 
     @commands.command(name='leaderboard')
@@ -214,11 +250,26 @@ class PantsGrabBot(commands.Bot):
     async def wintrade(self, ctx):
         await self.send_wrapper(ctx.send, "注意公民。 这是国家安全部。您的互联网活动引起了我们的注意。由于您的网络犯罪，您的社会 用评分将降至 -70。 (-70) 不要再这样做了。中国共产党的光荣。ATTENTION PLAYER. THIS IS THE TFT DEV TEAM. YOUR MATCH HISTORY HAS ATTRACTED OUR ATTENTION. DUE TO YOUR GAMEPLAY CRIMES YOU WILL BE BROUGHT DOWN TO -70 LADDER POINTS. (-70) DO NOT DO THIS AGAIN. GLORY TO THE GAME DESIGNER MORTDOG")
 
-    @commands.command(name='subtember')
-    async def subs(self, ctx):
-        if ctx.channel.name == 'kurumx' or ctx.channel.name == 'gangstasora':
-            await self.send_wrapper(ctx.send, '''Hello everyone subs are 20% off so please sub to this bum he needs to feed iCandyyyy's maplestory gacha addiction OkaygeBusiness ''')
+    @commands.command(name='frog')
+    async def frog_pasta(self, ctx):
+        if self.is_mitosis:
+            self.is_mitosis = False
+            self.frog += 1
+            await self.send_wrapper(ctx.send, f'@{ctx.channel.name} OSFrog Please feed the starving Mr. Kench OSFrog (warning {self.frog})')
+            await asyncio.sleep(54)
+            self.is_mitosis = True
 
+    @commands.command(name='raid')
+    async def raid_cmd(self, ctx):
+        await self.send_wrapper(ctx.send, "ICANT Download RAID: Shadow Legends for free on mobile or PC and get a special new players reward https://clik.cc/cwYCg Please don't forget to reach the 10th level. Thanks for your support!")
+
+    @commands.command(name="patch")
+    async def patch_command(self, ctx):
+        await self.send_wrapper(ctx.send, "Patchnotes: https://store.steampowered.com/news/app/431240/view/3117049349012260743")
+
+    @commands.command(name='variety')
+    async def variety_command(self, ctx):
+        await self.send_wrapper(ctx.send, f'@{ctx.channel.name} Can you please stop talking about tft in this tft-free safe space PogO ')
     
 ######## Helpers ######################################################################################
 

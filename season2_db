@@ -1,0 +1,75 @@
+import configparser
+import sqlalchemy as db
+import datetime
+from sqlalchemy.orm import backref
+from sqlalchemy.sql.schema import MetaData
+
+
+metadata=MetaData(schema='season2')
+pyramid = db.Table(
+    "pyramid",
+    metadata,
+    id = db.Column('id', db.Integer, primary_key=True),
+    db.Column('size', db.Integer)
+    channel = db.Column(db.String)
+    points = db.Column(db.Integer)
+    owners = db.orm.relationship('Chatter',
+                                 secondary=pyramid_owner_xref,
+                                 backref=backref('pyramids', lazy='dynamic'),
+                                 lazy='dynamic'
+                                )
+    emote = db.Column(db.String)
+    stolen_from_id = db.Column(db.Integer, db.ForeignKey('chatter.id'))
+    stolen_by_id = db.Column(db.Integer, db.ForeignKey('chatter.id'))
+    griefed_by_id = db.Column(db.Integer, db.ForeignKey('chatter.id'))
+    timestamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+)
+
+pyramid_owner_xref = db.Table(
+    "pyramid_owner_xref",
+    metadata,
+    db.Column("chatter_id", db.Integer, db.ForeignKey('chatter.id')),
+    db.Column("pyramid_id", db.Integer, db.ForeignKey('pyramid.id')),
+    schema='season1'
+)
+
+
+class Pyramid(Base):
+    __tablename__ = 'pyramid'
+    id = db.Column(db.Integer, primary_key=True)
+    size = db.Column(db.Integer)
+    channel = db.Column(db.String)
+    points = db.Column(db.Integer)
+    owners = db.orm.relationship('Chatter',
+                                 secondary=pyramid_owner_xref,
+                                 backref=backref('pyramids', lazy='dynamic'),
+                                 lazy='dynamic'
+                                )
+    emote = db.Column(db.String)
+    stolen_from_id = db.Column(db.Integer, db.ForeignKey('chatter.id'))
+    stolen_by_id = db.Column(db.Integer, db.ForeignKey('chatter.id'))
+    griefed_by_id = db.Column(db.Integer, db.ForeignKey('chatter.id'))
+    timestamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+
+class Chatter(Base):
+    __tablename__ = 'chatter'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, index=True)
+    stolen_from = db.orm.relationship('Pyramid', backref='stolen_from', primaryjoin='Pyramid.stolen_from_id==Chatter.id')
+    stolen_by = db.orm.relationship('Pyramid', backref='stolen_by', primaryjoin='Pyramid.stolen_by_id==Chatter.id')
+    griefed_by = db.orm.relationship('Pyramid', backref='griefed_by', primaryjoin='Pyramid.griefed_by_id==Chatter.id')
+    points = db.orm.relationship('Points', backref='chatter', primaryjoin='Points.chatter_id==Chatter.id')
+
+class Points(Base):
+    __tablename__= 'points'
+    id = db.Column(db.Integer, primary_key=True)
+    chatter_id = db.Column(db.Integer, db.ForeignKey('chatter.id'))
+    channel = db.Column(db.String, index=True)
+    points = db.Column(db.Integer)
+
+config = configparser.ConfigParser()
+config.read('config.ini')
+engine = db.create_engine(config['Database']['database_string'], echo = True)
+Base.metadata.create_all(engine)
+engine.dispose()
