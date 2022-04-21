@@ -132,7 +132,7 @@ class PantsGrabBot(commands.Bot):
     
     @commands.command(name='cocksize')
     async def cocksize_command(self, ctx, name=None):
-        if ctx.channel.name in {'kurumx'}:
+        if ctx.channel.name in {'kurumx', 'robinsongz'}:
             await self.send_wrapper(ctx.send, "I regret to inform you that this streamer hates fun PogO ")
         else:
             await self.send_wrapper(ctx.send, f'@{ctx.author.name}, {random.choice(self.cock_messages)}')
